@@ -1,14 +1,13 @@
 # Gradle Tasks Visualizer - VS Code Extension
 
-A Visual Studio Code and Cursor extension for visualizing Gradle tasks and their execution results.
+A Visual Studio Code and Cursor extension for viewing and executing Gradle tasks in an organized list view.
 
 ## Features
 
-- 📊 **Task Visualization** - Interactive graph showing all Gradle tasks and their dependencies
-- 🎯 **Task Execution** - Run tasks directly from the visualization
+- 📋 **Task List** - Organized list of all Gradle tasks grouped by category
+- 🎯 **Task Execution** - Run tasks directly from the list
 - ✅ **Result Tracking** - Visual feedback showing task execution results (success/failure)
-- 🔗 **Dependency Graph** - See task dependencies and relationships
-- 🎨 **Interactive UI** - Pan, zoom, and explore your task graph
+- 📊 **Execution Output** - View task output and execution status in expandable sections
 - ⚡ **Real-time Updates** - See task execution status in real-time
 
 ## Installation
@@ -36,13 +35,13 @@ A Visual Studio Code and Cursor extension for visualizing Gradle tasks and their
 2. Open Gradle Tasks Visualizer using one of these methods:
    - **Command Palette**: Press `Ctrl+Shift+P` (or `Cmd+Shift+P` on Mac) and type "Gradle Tasks: Open Gradle Tasks Visualizer"
    - **Context Menu**: Right-click on `build.gradle` or `build.gradle.kts` in the Explorer panel and select "Open Gradle Tasks Visualizer"
-3. The visualization panel will open showing all your Gradle tasks
-4. Click on any task node to see details and run it
+3. The tasks panel will open showing all your Gradle tasks organized by group
+4. Click on any task to select it
 5. Use the toolbar buttons to:
    - **Refresh**: Reload tasks from your Gradle project
-   - **Run Task**: Execute a selected task
-   - **Zoom In/Out**: Adjust the graph zoom level
-   - **Reset Zoom**: Return to default view
+   - **Run Task**: Execute the selected task
+6. Click "Run" on any task to execute it - an output section will appear showing execution status and results
+7. Click on group headers to expand/collapse task groups
 
 ## Configuration
 
@@ -56,40 +55,34 @@ To configure, go to Settings (`Ctrl+,`) and search for "Gradle Tasks".
 
 ## Commands
 
-- `Gradle Tasks: Open Gradle Tasks Visualizer` - Opens the visualization panel
+- `Gradle Tasks: Open Gradle Tasks Visualizer` - Opens the tasks panel
 - `Gradle Tasks: Refresh Tasks` - Reloads tasks from the Gradle project
-- `Gradle Tasks: Run Task` - Executes a selected task
-- `Gradle Tasks: Zoom In` - Increases zoom level
-- `Gradle Tasks: Zoom Out` - Decreases zoom level
+- `Gradle Tasks: Run Task` - Executes the selected task
 
 ## Features in Detail
 
-### Task Visualization
+### Task List
 
-Tasks are displayed as nodes in a graph, with:
-- **Color coding**:
+Tasks are displayed in a grouped list, with:
+- **Grouping**: Tasks are organized by their Gradle task groups (Build, Verification, Documentation, etc.)
+- **Collapsible Groups**: Click on group headers to expand or collapse task groups
+- **Status Indicators**:
   - Gray: Pending (not yet executed)
   - Green: Successfully executed
   - Red: Failed execution
-  - Pulsing: Currently running
-- **Grouping**: Tasks are organized by their Gradle task groups
-- **Dependencies**: Lines connect tasks to show dependency relationships
+  - Blue (pulsing): Currently running
+- **Task Information**: Each task shows its name, description, and current status
 
 ### Task Execution
 
-- Click on any task node to see its details
-- Click "Run Task" in the popup to execute it
-- Execution results are displayed with:
-  - Success/failure status
+- Click on any task to select it, or click the "Run" button directly on a task
+- When you run a task, an output section appears below it showing:
+  - Real-time execution status (Running/Completed/Failed)
   - Execution duration
-  - Timestamp
-  - Output (in the notification)
-
-### Interactive Controls
-
-- **Pan**: Click and drag to move around the graph
-- **Zoom**: Use mouse wheel or zoom buttons
-- **Task Details**: Click on any task node to see information and run it
+  - Full task output
+  - Error messages (if the task fails)
+- The output section can be expanded or collapsed by clicking on its header
+- Execution results are also displayed in VS Code notifications
 
 ## Development
 
@@ -150,16 +143,15 @@ Alternatively, you can use the provided SVG icon (`media/gradle-tasks-icon.svg`)
 
 1. The extension detects Gradle projects by looking for `build.gradle` or `build.gradle.kts` files
 2. It executes `gradle tasks --all` to retrieve all available tasks
-3. Task dependencies are inferred from common patterns and task names
-4. Tasks are rendered in a hierarchical graph layout
+3. Tasks are parsed and organized by their Gradle task groups
+4. Tasks are displayed in a grouped list view
 5. When a task is executed, the extension runs `gradle <taskName>` and tracks the result
-6. Results are displayed visually on the task nodes
+6. Results are displayed in the task's output section with status indicators and full output
 
 ## Limitations
 
-- Task dependencies are inferred from common patterns. For exact dependencies, Gradle's dependency resolution would need to be queried directly
-- Large projects with many tasks may require zooming/panning to navigate effectively
-- Task execution output is shown in notifications; full output can be viewed in the terminal
+- Task execution output is shown in the expandable output sections; full output can also be viewed in the terminal
+- Very large projects with many tasks may require scrolling through the list
 
 ## Contributing
 

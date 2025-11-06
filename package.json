@@ -2,7 +2,7 @@
   "name": "gradle-tasks-vscode",
   "displayName": "Gradle Tasks Visualizer",
   "description": "A VS Code extension for visualizing Gradle tasks and their execution results graphically",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "publisher": "kambei",
   "icon": "media/main-icon.png",
   "engines": {
