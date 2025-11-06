@@ -1,0 +1,145 @@
+{
+  "name": "gradle-tasks-vscode",
+  "displayName": "Gradle Tasks Visualizer",
+  "description": "A VS Code extension for visualizing Gradle tasks and their execution results graphically",
+  "version": "0.0.5",
+  "publisher": "kambei",
+  "icon": "media/main-icon.png",
+  "engines": {
+    "vscode": "^1.40.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:gradle-tasks.open",
+    "onCommand:gradle-tasks.refresh",
+    "onCommand:gradle-tasks.runTask",
+    "onCommand:gradle-tasks.zoomIn",
+    "onCommand:gradle-tasks.zoomOut"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "gradle-tasks.open",
+        "title": "Open Gradle Tasks Visualizer",
+        "icon": {
+          "light": "media/activity-icon.png",
+          "dark": "media/activity-icon.png"
+        },
+        "category": "Gradle Tasks"
+      },
+      {
+        "command": "gradle-tasks.refresh",
+        "title": "Refresh Tasks",
+        "icon": {
+          "light": "media/activity-icon.png",
+          "dark": "media/activity-icon.png"
+        },
+        "category": "Gradle Tasks"
+      },
+      {
+        "command": "gradle-tasks.runTask",
+        "title": "Run Task",
+        "icon": {
+          "light": "media/activity-icon.png",
+          "dark": "media/activity-icon.png"
+        },
+        "category": "Gradle Tasks"
+      },
+      {
+        "command": "gradle-tasks.zoomIn",
+        "title": "Zoom In",
+        "category": "Gradle Tasks"
+      },
+      {
+        "command": "gradle-tasks.zoomOut",
+        "title": "Zoom Out",
+        "category": "Gradle Tasks"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "when": "resourceFilename == 'build.gradle' || resourceFilename == 'build.gradle.kts'",
+          "command": "gradle-tasks.open",
+          "group": "navigation"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "gradle-tasks.open",
+          "when": "workspaceFolderCount > 0"
+        },
+        {
+          "command": "gradle-tasks.refresh",
+          "when": "gradle-tasks.active"
+        },
+        {
+          "command": "gradle-tasks.runTask",
+          "when": "gradle-tasks.active"
+        },
+        {
+          "command": "gradle-tasks.zoomIn",
+          "when": "gradle-tasks.active"
+        },
+        {
+          "command": "gradle-tasks.zoomOut",
+          "when": "gradle-tasks.active"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Gradle Tasks",
+      "properties": {
+        "gradleTasks.gradleCommand": {
+          "type": "string",
+          "default": "gradle",
+          "description": "Gradle command to use (e.g., 'gradle', './gradlew', 'gradlew.bat')"
+        },
+        "gradleTasks.gradleWrapper": {
+          "type": "boolean",
+          "default": true,
+          "description": "Use Gradle wrapper if available"
+        }
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kambei/git-viz-vscode.git"
+  },
+  "keywords": [
+    "gradle",
+    "tasks",
+    "visualization",
+    "vscode",
+    "extension",
+    "graph",
+    "build",
+    "kambei"
+  ],
+  "author": "kambei",
+  "license": "MIT",
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "webpack --mode production",
+    "watch": "webpack --mode development --watch",
+    "package": "vsce package",
+    "create-icons": "node create-gradle-icon.js && node create-gradle-activity-icon.js",
+    "create-main-icon": "node create-gradle-icon.js",
+    "create-activity-icon": "node create-gradle-activity-icon.js"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@types/node": "12.x",
+    "@types/vscode": "^1.40.0",
+    "babel-loader": "^8.0.0",
+    "canvas": "^3.2.0",
+    "vsce": "^2.15.0",
+    "webpack": "^5.102.1",
+    "webpack-cli": "^4.0.0"
+  }
+}

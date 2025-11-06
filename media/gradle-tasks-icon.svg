@@ -1,0 +1,54 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background with gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0" y1="0" x2="128" y2="128">
+      <stop offset="0%" stop-color="#02303A"/>
+      <stop offset="100%" stop-color="#0A7C8C"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="2" flood-opacity="0.3"/>
+    </filter>
+    <marker id="arrowhead" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <polygon points="0 0, 6 3, 0 6" fill="#FFFFFF" opacity="0.6"/>
+    </marker>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="128" height="128" rx="16" fill="url(#bgGradient)"/>
+  
+  <!-- Task graph visualization -->
+  <!-- Main horizontal line (build flow) -->
+  <line x1="20" y1="64" x2="108" y2="64" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.8"/>
+  
+  <!-- Task nodes (circles representing tasks) -->
+  <!-- Top row tasks -->
+  <circle cx="40" cy="40" r="12" fill="#4CAF50" filter="url(#shadow)"/>
+  <circle cx="64" cy="40" r="12" fill="#4CAF50" filter="url(#shadow)"/>
+  <circle cx="88" cy="40" r="12" fill="#4CAF50" filter="url(#shadow)"/>
+  
+  <!-- Middle row (main build tasks) -->
+  <circle cx="40" cy="64" r="14" fill="#2196F3" filter="url(#shadow)"/>
+  <circle cx="64" cy="64" r="16" fill="#FF9800" filter="url(#shadow)"/>
+  <circle cx="88" cy="64" r="14" fill="#2196F3" filter="url(#shadow)"/>
+  
+  <!-- Bottom row tasks -->
+  <circle cx="40" cy="88" r="12" fill="#9E9E9E" filter="url(#shadow)"/>
+  <circle cx="64" cy="88" r="12" fill="#9E9E9E" filter="url(#shadow)"/>
+  <circle cx="88" cy="88" r="12" fill="#9E9E9E" filter="url(#shadow)"/>
+  
+  <!-- Dependency arrows showing task dependencies -->
+  <line x1="40" y1="40" x2="40" y2="50" stroke="#FFFFFF" stroke-width="2" marker-end="url(#arrowhead)" opacity="0.6"/>
+  <line x1="64" y1="40" x2="64" y2="50" stroke="#FFFFFF" stroke-width="2" marker-end="url(#arrowhead)" opacity="0.6"/>
+  <line x1="88" y1="40" x2="88" y2="50" stroke="#FFFFFF" stroke-width="2" marker-end="url(#arrowhead)" opacity="0.6"/>
+  
+  <line x1="50" y1="64" x2="54" y2="64" stroke="#FFFFFF" stroke-width="2" marker-end="url(#arrowhead)" opacity="0.6"/>
+  <line x1="74" y1="64" x2="78" y2="64" stroke="#FFFFFF" stroke-width="2" marker-end="url(#arrowhead)" opacity="0.6"/>
+  
+  <line x1="40" y1="76" x2="40" y2="88" stroke="#FFFFFF" stroke-width="2" marker-end="url(#arrowhead)" opacity="0.6"/>
+  <line x1="64" y1="76" x2="64" y2="88" stroke="#FFFFFF" stroke-width="2" marker-end="url(#arrowhead)" opacity="0.6"/>
+  <line x1="88" y1="76" x2="88" y2="88" stroke="#FFFFFF" stroke-width="2" marker-end="url(#arrowhead)" opacity="0.6"/>
+  
+  <!-- Center build task highlight -->
+  <circle cx="64" cy="64" r="18" fill="none" stroke="#FFC107" stroke-width="2" opacity="0.5"/>
+</svg>
+
