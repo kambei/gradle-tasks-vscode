@@ -36,12 +36,11 @@ A Visual Studio Code and Cursor extension for viewing and executing Gradle tasks
    - **Command Palette**: Press `Ctrl+Shift+P` (or `Cmd+Shift+P` on Mac) and type "Gradle Tasks: Open Gradle Tasks Visualizer"
    - **Context Menu**: Right-click on `build.gradle` or `build.gradle.kts` in the Explorer panel and select "Open Gradle Tasks Visualizer"
 3. The tasks panel will open showing all your Gradle tasks organized by group
-4. Click on any task to select it
-5. Use the toolbar buttons to:
+4. Use the toolbar buttons:
    - **Refresh**: Reload tasks from your Gradle project
-   - **Run Task**: Execute the selected task
-6. Click "Run" on any task to execute it - an output section will appear showing execution status and results
-7. Click on group headers to expand/collapse task groups
+   - **Run Task**: Execute the selected task (select a task first by clicking on it)
+5. Click "Run" on any task to execute it - an output section will appear showing execution status and results
+6. Click on group headers to expand/collapse task groups
 
 ## Configuration
 
@@ -56,8 +55,8 @@ To configure, go to Settings (`Ctrl+,`) and search for "Gradle Tasks".
 ## Commands
 
 - `Gradle Tasks: Open Gradle Tasks Visualizer` - Opens the tasks panel
-- `Gradle Tasks: Refresh Tasks` - Reloads tasks from the Gradle project
-- `Gradle Tasks: Run Task` - Executes the selected task
+
+**Note**: Other actions like refreshing tasks and running tasks are available through the UI buttons within the tasks panel, not as separate commands.
 
 ## Features in Detail
 
