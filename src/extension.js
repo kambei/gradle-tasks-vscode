@@ -105,7 +105,7 @@ function setupWebviewMessageHandler(context) {
         async message => {
             switch (message.command) {
                 case 'runTask':
-                    await runGradleTask(message.taskName);
+                    await runGradleTask(message.taskName, message.arguments || '');
                     break;
                 case 'getTaskDetails':
                     getTaskDetails(message.taskName);
@@ -366,11 +366,15 @@ function inferDependencies(taskName, allTasks) {
     return dependencies;
 }
 
-async function runGradleTask(taskName) {
+async function runGradleTask(taskName, taskArgs = '') {
     if (!currentPanel) return;
 
     const gradleCommand = getGradleCommand();
     const workspacePath = getWorkspacePath();
+    
+    // Build the command with arguments
+    const args = taskArgs.trim() ? ` ${taskArgs.trim()}` : '';
+    const fullCommand = `${gradleCommand} ${taskName}${args} --console=plain`;
 
     currentPanel.webview.postMessage({
         command: 'taskRunning',
@@ -380,7 +384,7 @@ async function runGradleTask(taskName) {
     return new Promise((resolve) => {
         const startTime = Date.now();
         
-        exec(`${gradleCommand} ${taskName} --console=plain`, 
+        exec(fullCommand, 
             { cwd: workspacePath },
             (error, stdout, stderr) => {
                 const duration = Date.now() - startTime;
@@ -637,6 +641,33 @@ function getWebviewContent(context) {
             background-color: var(--vscode-button-secondaryHoverBackground);
         }
 
+        .task-arguments {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-right: 8px;
+        }
+
+        .task-arguments input {
+            padding: 4px 8px;
+            background-color: var(--vscode-input-background);
+            color: var(--vscode-input-foreground);
+            border: 1px solid var(--vscode-input-border);
+            border-radius: 3px;
+            font-size: 11px;
+            width: 150px;
+            font-family: inherit;
+        }
+
+        .task-arguments input:focus {
+            outline: none;
+            border-color: var(--vscode-focusBorder);
+        }
+
+        .task-arguments input::placeholder {
+            color: var(--vscode-input-placeholderForeground);
+        }
+
         .task-output-section {
             display: block;
             margin-top: 8px;
@@ -753,6 +784,7 @@ function getWebviewContent(context) {
         let selectedTask = null;
         let collapsedGroups = new Set();
         let expandedTasks = new Set();
+        let taskArguments = new Map(); // Store arguments for each task
 
         const tasksContainer = document.getElementById('tasksContainer');
         const loading = document.getElementById('loading');
@@ -814,7 +846,8 @@ function getWebviewContent(context) {
 
         function runSelectedTask() {
             if (selectedTask) {
-                vscode.postMessage({ command: 'runTask', taskName: selectedTask });
+                const args = taskArguments.get(selectedTask) || '';
+                vscode.postMessage({ command: 'runTask', taskName: selectedTask, arguments: args });
             }
         }
 
@@ -833,11 +866,24 @@ function getWebviewContent(context) {
             renderTaskList();
         }
 
-        function runTask(taskName) {
+        function runTask(taskName, argsInput) {
+            // Get arguments from input if provided, otherwise from stored value
+            let args = '';
+            if (argsInput) {
+                args = argsInput.value.trim();
+                taskArguments.set(taskName, args);
+            } else {
+                args = taskArguments.get(taskName) || '';
+            }
+            
             // Expand the output section for this task
             expandedTasks.add(taskName);
-            vscode.postMessage({ command: 'runTask', taskName: taskName });
+            vscode.postMessage({ command: 'runTask', taskName: taskName, arguments: args });
             renderTaskList();
+        }
+
+        function updateTaskArguments(taskName, args) {
+            taskArguments.set(taskName, args.trim());
         }
 
         function toggleTaskOutput(taskName) {
@@ -920,7 +966,17 @@ function getWebviewContent(context) {
                                     \` : ''}
                                 </div>
                                 <div class="task-actions">
-                                    <button onclick="event.stopPropagation(); runTask('\${task.name}')">Run</button>
+                                    <div class="task-arguments">
+                                        <input 
+                                            type="text" 
+                                            id="args-\${task.name}"
+                                            placeholder="Arguments (e.g., -x test)" 
+                                            onchange="updateTaskArguments('\${task.name}', this.value)"
+                                            onclick="event.stopPropagation()"
+                                            onkeydown="if(event.key === 'Enter') { event.stopPropagation(); runTask('\${task.name}', document.getElementById('args-\${task.name}')); }"
+                                        />
+                                    </div>
+                                    <button onclick="event.stopPropagation(); runTask('\${task.name}', document.getElementById('args-\${task.name}'))">Run</button>
                                 </div>
                             </div>
                             \${hasOutput ? \`
@@ -949,6 +1005,12 @@ function getWebviewContent(context) {
 
                     taskItem.onclick = () => selectTask(task.name);
                     taskList.appendChild(taskItem);
+                    
+                    // Set the arguments input value after the element is created
+                    const argsInput = taskItem.querySelector(\`#args-\${task.name}\`);
+                    if (argsInput) {
+                        argsInput.value = taskArguments.get(task.name) || '';
+                    }
                 });
 
                 groupDiv.appendChild(taskList);

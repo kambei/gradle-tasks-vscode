@@ -2,7 +2,7 @@
   "name": "gradle-tasks-vscode",
   "displayName": "Gradle Tasks Visualizer",
   "description": "A VS Code and Cursor extension for visualizing Gradle tasks and their execution results graphically",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "publisher": "kambei",
   "icon": "media/main-icon.png",
   "engines": {
@@ -108,7 +108,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/kambei/git-viz-vscode.git"
+    "url": "https://github.com/kambei/gradle-tasks-vscode.git"
   },
   "keywords": [
     "gradle",

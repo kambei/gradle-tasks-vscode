@@ -2,6 +2,8 @@
 
 A Visual Studio Code and Cursor extension for viewing and executing Gradle tasks in an organized list view.
 
+**Repository**: [https://github.com/kambei/gradle-tasks-vscode](https://github.com/kambei/gradle-tasks-vscode)
+
 ## Features
 
 - 📋 **Task List** - Organized list of all Gradle tasks grouped by category
@@ -39,8 +41,12 @@ A Visual Studio Code and Cursor extension for viewing and executing Gradle tasks
 4. Use the toolbar buttons:
    - **Refresh**: Reload tasks from your Gradle project
    - **Run Task**: Execute the selected task (select a task first by clicking on it)
-5. Click "Run" on any task to execute it - an output section will appear showing execution status and results
-6. Click on group headers to expand/collapse task groups
+5. For each task, you can:
+   - Enter Gradle arguments in the input field (e.g., `-x test` to skip tests, `--stacktrace` for detailed errors)
+   - Click "Run" to execute the task with the specified arguments
+   - Press Enter in the arguments field to run the task
+6. When you run a task, an output section appears below it showing execution status and results
+7. Click on group headers to expand/collapse task groups
 
 ## Configuration
 
@@ -75,6 +81,9 @@ Tasks are displayed in a grouped list, with:
 ### Task Execution
 
 - Click on any task to select it, or click the "Run" button directly on a task
+- **Task Arguments**: Each task has an input field where you can specify Gradle arguments (e.g., `-x test` to exclude tests, `--stacktrace` for detailed errors)
+  - Arguments are preserved per task and can be edited before running
+  - Press Enter in the arguments field to run the task with those arguments
 - When you run a task, an output section appears below it showing:
   - Real-time execution status (Running/Completed/Failed)
   - Execution duration
